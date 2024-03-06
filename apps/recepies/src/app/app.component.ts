@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, afterNextRender } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
@@ -11,4 +11,9 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 })
 export class AppComponent {
   title = 'recepies';
+  constructor() {
+    afterNextRender(() => {
+      console.log(window.location.pathname)
+    })
+  }
 }

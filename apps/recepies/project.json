@@ -1,0 +1,78 @@
+{
+  "name": "recepies",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "recepies-workspace",
+  "sourceRoot": "apps/recepies/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/recepies",
+        "index": "apps/recepies/src/index.html",
+        "browser": "apps/recepies/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/recepies/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/recepies/src/favicon.ico", "apps/recepies/src/assets"],
+        "styles": ["apps/recepies/src/styles.scss"],
+        "scripts": [],
+        "server": "apps/recepies/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/recepies/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "recepies:build:production"
+        },
+        "development": {
+          "buildTarget": "recepies:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "recepies:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "recepies:build",
+        "staticFilePath": "dist/apps/recepies/browser"
+      }
+    }
+  }
+}
